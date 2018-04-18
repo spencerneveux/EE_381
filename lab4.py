@@ -6,7 +6,7 @@
 # --------------
 
 # ----------------------------------------
-# Hypothesis Testing
+# Title - Hypothesis Testing
 # ----------------------------------------
 
 # Importing and setting up variables
@@ -71,6 +71,11 @@ def CriticalValue():
         critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
         print("Critical Value: {0} ; Probability: {1:0.3f}".format(x, critical_value))
 
-# xvalue, pvalue = BinomialDist()
-# Graph(xvalue, pvalue)
-CriticalValue()
+# ----------------------------------------
+# List of p values
+# ----------------------------------------
+p_value_list = []
+for x in range(55, 100, 5):
+    p_value_list.append(x/100)
+
+print(p_value_list)
