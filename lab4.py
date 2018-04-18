@@ -48,7 +48,6 @@ def Graph(x_value_list, probability_list):
 # ----------------------------------------
  # H0 = 50% Ha > 50%
 
-
 # ----------------------------------------
 # Binomial Distribution
 # ----------------------------------------
@@ -66,19 +65,11 @@ def BinomialDist():
 # Critical Value
 # ----------------------------------------
 def CriticalValue():
-    result = 0
-    # Create outer loop to try each x value
-    for x in range(18):
+    user_input = int(input("Enter the C.V.\n"))
 
-        # Create inner loop to sum up each value from outer loop
-        for y in range(x):
-                
-            critical_value = nCx(18, y) * (p ** y) * ((1-p) ** (18 - y))
-            result += critical_value
-
-        print(result)
-        result = 0
-
+    for x in range(user_input, 18):
+        critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
+        print("Critical Value: {0} ; Probability: {1:0.3f}".format(x, critical_value))
 
 # xvalue, pvalue = BinomialDist()
 # Graph(xvalue, pvalue)
