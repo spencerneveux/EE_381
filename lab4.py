@@ -65,17 +65,35 @@ def BinomialDist():
 # Critical Value
 # ----------------------------------------
 def CriticalValue():
+    minimum = 10
+    critical_key_value = 0
+    critical_value_dictionary = {}
+
     user_input = int(input("Enter the C.V.\n"))
 
     for x in range(user_input, 18):
         critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
-        print("Critical Value: {0} ; Probability: {1:0.3f}".format(x, critical_value))
+        critical_value_dictionary[x] = critical_value
+        
+        print("\nCritical Value: {0} ; Probability: {1:0.3f}".format(x, critical_value))
+
+    for key in critical_value_dictionary:
+        value = critical_value_dictionary[key]
+        # Find the smallest difference between 0.05 and cv probabilities
+        if (0.05 - value) < minimum:
+            minimum = value
+            critical_key_value = key
+
+    print("\nP((X > C.V.)|(p = 1/2) = {0:0.3f} ; C.V. = {1}".format(minimum, critical_key_value))
 
 # ----------------------------------------
 # List of p values
 # ----------------------------------------
-p_value_list = []
-for x in range(55, 100, 5):
-    p_value_list.append(x/100)
+def PValueGenerator():
+    p_value_list = []
+    for x in range(55, 100, 5):
+        p_value_list.append(x/100)
 
-print(p_value_list)
+    print(p_value_list)
+
+CriticalValue()
