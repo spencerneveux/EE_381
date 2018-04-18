@@ -40,13 +40,13 @@ def Graph(x_value_list, probability_list):
     ax.set_xlabel("R.V. values")
     ax.set_ylabel("Probability")
 
-    plt.bar(x_value_list, probability_list)
+    plt.bar(x_value_list, probability_list, color="fuchsia")
     plt.show()
 
 # ----------------------------------------
 # Hypothesis Statement
 # ----------------------------------------
- # H0 = 50% Ha > 50%
+ # H0: p = 50% Ha: p > 50%
 
 # ----------------------------------------
 # Binomial Distribution
@@ -67,24 +67,32 @@ def BinomialDist():
 def CriticalValue():
     minimum = 10
     critical_key_value = 0
+    critical_value_list = []
     critical_value_dictionary = {}
 
     user_input = int(input("Enter the C.V.\n"))
 
-    for x in range(user_input, 18):
-        critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
-        critical_value_dictionary[x] = critical_value
-        
-        print("\nCritical Value: {0} ; Probability: {1:0.3f}".format(x, critical_value))
+    for y in range(user_input, 18):
 
-    for key in critical_value_dictionary:
-        value = critical_value_dictionary[key]
-        # Find the smallest difference between 0.05 and cv probabilities
-        if (0.05 - value) < minimum:
-            minimum = value
-            critical_key_value = key
+        for x in range(y, 18):
+            critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
+            critical_value_list.append(critical_value)
+            # critical_value_dictionary[x] = critical_value
+            
+        ans = sum(critical_value_list)
+        critical_value_dictionary[y] = ans
+        print("\nCritical Value: {0} ; Probability: {1:0.3f}".format(y, ans))
+        critical_value_list.clear()
 
-    print("\nP((X > C.V.)|(p = 1/2) = {0:0.3f} ; C.V. = {1}".format(minimum, critical_key_value))
+    # for key in critical_value_dictionary:
+    #     value = critical_value_dictionary[key]
+    #     # Find the smallest difference between 0.05 and cv probabilities
+    #     if (0.05 - value) < minimum:
+    #         print(value)
+    #         minimum = value
+    #         critical_key_value = key
+
+    # print("\nP((X > C.V.)|(p = 1/2) = 0.05 ~ {0:0.3f} ; C.V. = {1}".format(minimum, critical_key_value))
 
 # ----------------------------------------
 # List of p values
@@ -94,6 +102,23 @@ def PValueGenerator():
     for x in range(55, 100, 5):
         p_value_list.append(x/100)
 
-    print(p_value_list)
+    return p_value_list
 
-CriticalValue()
+# ----------------------------------------
+# Beta - Type 2 Error
+# ----------------------------------------
+def BetaError(p_value_list):
+    P = []
+    plot_list = []
+
+    for value in p_value_list:
+
+        for x in range(13):
+            probability = nCx(18, x) * (value ** x) * ((1 - value) ** (18 - x))
+            P.append(probability)
+
+        answer = sum(P)
+        print(answer)
+        plot_list.append(answer)
+        P.clear()
+    return plot_list, p_value_list
