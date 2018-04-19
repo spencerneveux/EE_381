@@ -105,9 +105,9 @@ def PValueGenerator():
     return p_value_list
 
 # ----------------------------------------
-# Beta - Type 2 Error
+# Binomial Probabilities for P > 0.5
 # ----------------------------------------
-def BetaError(p_value_list):
+def PValueProbabilities(p_value_list):
     P = []
     plot_list = []
 
@@ -118,7 +118,25 @@ def BetaError(p_value_list):
             P.append(probability)
 
         answer = sum(P)
-        print(answer)
+        print(value, answer)
         plot_list.append(answer)
         P.clear()
-    return plot_list, p_value_list
+    return plot_list
+
+# ----------------------------------------
+# Binomial Probabilities for n = 18
+# ----------------------------------------
+def BinomialProbabilities():
+    P = []
+    X = []
+
+    value = float(input("pvalue: "))
+
+    for x in range(19):
+        probability = nCx(18, x) * (value ** x) * ((1 - value) ** (18 - x))
+        P.append(probability)
+        X.append(x)
+
+    Graph(X, P)
+
+BinomialProbabilities()
