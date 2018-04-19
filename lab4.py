@@ -105,11 +105,11 @@ def PValueGenerator():
     return p_value_list
 
 # ----------------------------------------
-# Binomial Probabilities for P > 0.5
+# Beta Values
 # ----------------------------------------
-def PValueProbabilities(p_value_list):
+def BetaValues(p_value_list):
     P = []
-    plot_list = []
+    beta_value_list = []
 
     for value in p_value_list:
 
@@ -118,10 +118,10 @@ def PValueProbabilities(p_value_list):
             P.append(probability)
 
         answer = sum(P)
-        print(value, answer)
-        plot_list.append(answer)
+        # print(value, answer)
+        beta_value_list.append(answer)
         P.clear()
-    return plot_list
+    return beta_value_list
 
 # ----------------------------------------
 # Binomial Probabilities for n = 18
@@ -139,4 +139,27 @@ def BinomialProbabilities():
 
     Graph(X, P)
 
-BinomialProbabilities()
+# ----------------------------------------
+# The Power of the Test
+# ----------------------------------------
+def TestOfPower(beta_values, p_value_list):
+    power_list = []
+
+    for beta in beta_values:
+        power = 1 - beta
+        power_list.append(power)
+        power = 0
+        
+    # Create a curved plot of power vs. p_value_list
+    plt.plot(p_value_list, power_list, 'bs')
+    plt.axis([0.5, 1, 0, 1.5])
+    plt.xlabel("P values")
+    plt.ylabel("Power")
+    plt.title("Power vs p")
+    plt.grid(True)
+    plt.show()
+
+
+p_value_list = PValueGenerator()
+beta_values = BetaValues(p_value_list)
+TestOfPower(beta_values, p_value_list)
