@@ -18,6 +18,23 @@ number_trials = 18
 p = 0.5
 
 # ----------------------------------------
+# Menu
+# ----------------------------------------
+def PrintMenu():
+    print("\nMain Menu\n1. Hypothesis Test Statement\n2. Binomial Distribution\n3. Critical Value\
+    \n4. Binomial Probability\n5. Power Test\n6. Quit")
+
+# ----------------------------------------
+# Get User Menu Choice
+# ----------------------------------------
+def GetMenuChoice():
+    user_input = int(input("\nChoose a function by its appropriate number: "))
+    while not(1 <= user_input <=6):
+        user_input = int(input("\nThat isn't valid. Choose a function by its appropriate number: "))
+
+    return user_input
+
+# ----------------------------------------
 # Combinations Calculation
 # ----------------------------------------
 def nCx(n, x):
@@ -36,17 +53,18 @@ def Graph(x_value_list, probability_list):
     ax = fig.add_subplot(111)
     fig.subplots_adjust(left=.125, top=0.85)
 
-    ax.set_title("Probability({X = x})")
-    ax.set_xlabel("R.V. values")
+    ax.set_title("Probability Doohickey")
+    ax.set_xlabel("R.V. values(x)")
     ax.set_ylabel("Probability")
 
-    plt.bar(x_value_list, probability_list, color="fuchsia")
+    plt.bar(x_value_list, probability_list, color="green")
     plt.show()
 
 # ----------------------------------------
 # Hypothesis Statement
 # ----------------------------------------
- # H0: p = 50% Ha: p > 50%
+def HypothesisStatement():
+    print("\nThe Hypothesis Statement is: H0: p = 50% Ha: p > 50%")
 
 # ----------------------------------------
 # Binomial Distribution
@@ -65,10 +83,7 @@ def BinomialDist():
 # Critical Value
 # ----------------------------------------
 def CriticalValue():
-    minimum = 10
-    critical_key_value = 0
     critical_value_list = []
-    critical_value_dictionary = {}
 
     user_input = int(input("Enter the C.V.\n"))
 
@@ -83,16 +98,6 @@ def CriticalValue():
         critical_value_dictionary[y] = ans
         print("\nCritical Value: {0} ; Probability: {1:0.3f}".format(y, ans))
         critical_value_list.clear()
-
-    # for key in critical_value_dictionary:
-    #     value = critical_value_dictionary[key]
-    #     # Find the smallest difference between 0.05 and cv probabilities
-    #     if (0.05 - value) < minimum:
-    #         print(value)
-    #         minimum = value
-    #         critical_key_value = key
-
-    # print("\nP((X > C.V.)|(p = 1/2) = 0.05 ~ {0:0.3f} ; C.V. = {1}".format(minimum, critical_key_value))
 
 # ----------------------------------------
 # List of p values
@@ -130,7 +135,7 @@ def BinomialProbabilities():
     P = []
     X = []
 
-    value = float(input("pvalue: "))
+    value = float(input("Please enter a p value between 0.5 to 1: "))
 
     for x in range(19):
         probability = nCx(18, x) * (value ** x) * ((1 - value) ** (18 - x))
@@ -149,7 +154,7 @@ def TestOfPower(beta_values, p_value_list):
         power = 1 - beta
         power_list.append(power)
         power = 0
-        
+
     # Create a curved plot of power vs. p_value_list
     plt.plot(p_value_list, power_list, 'bs')
     plt.axis([0.5, 1, 0, 1.5])
@@ -159,7 +164,34 @@ def TestOfPower(beta_values, p_value_list):
     plt.grid(True)
     plt.show()
 
+# ----------------------------------------
+# The One to Rule Them All!! - Main Function
+# ----------------------------------------
+def main():
+    while True:
+        PrintMenu()
+        user_input = GetMenuChoice()
 
-p_value_list = PValueGenerator()
-beta_values = BetaValues(p_value_list)
-TestOfPower(beta_values, p_value_list)
+        if user_input == 1:
+            HypothesisStatement()
+            continue
+        elif user_input == 2:
+            x_value_list, probability_list = BinomialDist()
+            Graph(x_value_list, probability_list)
+            continue
+        elif user_input == 3:
+            CriticalValue()
+            continue
+        elif user_input == 4:
+            BinomialProbabilities()
+            continue
+        elif user_input == 5:
+            p_value_list = PValueGenerator()
+            beta_value_list = BetaValues(p_value_list)
+            TestOfPower(beta_value_list, p_value_list)
+            continue
+        else:
+            print("Quitting Program")
+            break
+
+main()
