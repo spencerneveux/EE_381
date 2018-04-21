@@ -92,10 +92,8 @@ def CriticalValue():
         for x in range(y, 18):
             critical_value = nCx(18, x) * (p ** x) * ((1-p) ** (18 - x))
             critical_value_list.append(critical_value)
-            # critical_value_dictionary[x] = critical_value
             
         ans = sum(critical_value_list)
-        critical_value_dictionary[y] = ans
         print("\nCritical Value: {0} ; Probability: {1:0.3f}".format(y, ans))
         critical_value_list.clear()
 
@@ -123,7 +121,6 @@ def BetaValues(p_value_list):
             P.append(probability)
 
         answer = sum(P)
-        # print(value, answer)
         beta_value_list.append(answer)
         P.clear()
     return beta_value_list
