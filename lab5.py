@@ -84,9 +84,9 @@ def hypothesisTest(r):
     else:
         print("Don't reject null hypothesis")
 
-# ----------------------
-# Correlation
-# ----------------------
+# ------------------------------
+# Correlation - Least Square Fit
+# ------------------------------
 
 
 
